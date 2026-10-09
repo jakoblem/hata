@@ -40,7 +40,7 @@ MAX_CACHED = 100
 VALID_ID = re.compile(r"(?:\d{4}\.\d{4,5}|[a-z-]+(?:\.[A-Z]{2})?/\d{7})\Z", re.I)
 VALID_ORBIT_SLUG = re.compile(r"[a-z0-9-]{5,180}\Z")
 ORBIT_PUBLICATION_PATH = re.compile(r"^/en/publications/([a-z0-9-]{5,180})/?$", re.I)
-ORBIT_PROFILE = "https://orbit.dtu.dk/en/persons/{slug}/"
+ORBIT_PROFILE = "https://orbit.dtu.dk/en/persons/{slug}/publications/"
 NEWS_BLOCK = re.compile(r"(?<=<!-- PAPERS:START -->).*?(?=<!-- PAPERS:END -->)", re.S)
 MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
 PUB_YEAR = re.compile(r"(?<!\d)(19[789]\d|20\d\d)(?!\d)")
