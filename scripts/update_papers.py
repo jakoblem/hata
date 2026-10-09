@@ -387,7 +387,7 @@ def render_news(papers: list[dict]) -> str:
                             f'<span class="paper-day">{pub.day:02d}</span><span class="paper-year">{pub.year}</span></time>')
         else:
             date_display = f'<time datetime="{pub.year}" class="orbit-year"><span class="paper-day">{pub.year}</span><span class="paper-year">ORBIT</span></time>'
-        primary = item.get("orbit_url") or item.get("url")
+        primary = ("https://arxiv.org/pdf/" + item["arxiv_id"]) if item.get("arxiv_id") else item.get("orbit_url")
         if not valid_orbit_url(primary) and not item.get("arxiv_id"):
             continue
         sources = []
