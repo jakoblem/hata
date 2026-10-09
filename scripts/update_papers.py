@@ -31,6 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "config" / "authors.json"
 DATA = ROOT / "site" / "data" / "papers.json"
 PAGE = ROOT / "site" / "index.html"
+SUBMITTED = ROOT / "config" / "submitted-papers.json"
 API_URL = "https://export.arxiv.org/api/query"
 ATOM = "{http://www.w3.org/2005/Atom}"
 ARXIV = "{http://arxiv.org/schemas/atom}"
@@ -323,6 +324,50 @@ def merge_papers(existing: list[dict], fresh: list[dict]) -> list[dict]:
     return merged[:MAX_CACHED]
 
 
+def read_submitted_papers() -> list[dict]:
+    """Read opt-in, unpublished manuscripts; never include the commented example."""
+    if not SUBMITTED.exists():
+        return []
+    payload = json.loads(SUBMITTED.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict) or not isinstance(payload.get("papers"), list):
+        raise ValueError("submitted-papers.json must contain a papers list")
+    rows = []
+    for item in payload["papers"]:
+        if not isinstance(item, dict):
+            raise ValueError("Each submitted paper must be an object")
+        title, authors, date = item.get("title"), item.get("authors"), item.get("submitted")
+        if not isinstance(title, str) or not title.strip() or not isinstance(authors, list) or not authors or not all(isinstance(a, str) and a.strip() for a in authors):
+            raise ValueError("Submitted papers require a title and nonempty list of authors")
+        if not isinstance(date, str):
+            raise ValueError("Submitted papers require a YYYY-MM-DD submission date")
+        dt.date.fromisoformat(date)
+        journal = item.get("journal", "")
+        if not isinstance(journal, str):
+            raise ValueError("Optional journal must be text")
+        rows.append({"title": title.strip(), "authors": authors, "submitted": date, "journal": journal.strip()})
+    return rows
+
+
+def render_submitted_papers(submitted: list[dict], published: list[dict]) -> str:
+    """Only announce manuscripts without a matching public arXiv/Orbit record."""
+    lines = []
+    for item in sorted(submitted, key=lambda x: x["submitted"], reverse=True):
+        if any(same_paper(item, paper) for paper in published):
+            continue
+        date = dt.date.fromisoformat(item["submitted"])
+        label = "SUBMITTED MANUSCRIPT"
+        if item["journal"]:
+            label += " · " + item["journal"]
+        lines.extend([
+            '          <li class="paper-item">',
+            f'            <div class="paper-date"><time datetime="{date.isoformat()}"><span class="paper-month">{MONTHS[date.month-1]}</span><span class="paper-day">{date.day:02d}</span><span class="paper-year">{date.year}</span></time></div>',
+            f'            <div class="paper-info"><p class="paper-type">{html.escape(label)}</p><h3>{html.escape(item["title"])}</h3><p class="paper-authors">{html.escape(", ".join(item["authors"]))}</p></div>',
+            '            <div class="paper-sources">Not yet publicly available</div>',
+            '          </li>',
+        ])
+    return ("\\n" + "\\n".join(lines) + "\\n") if lines else ""
+
+
 def render_news(papers: list[dict]) -> str:
     if not papers:
         return '\n          <li class="no-papers">Browse publications through our DTU Orbit profiles.</li>\n'
@@ -395,7 +440,9 @@ def update(offline: bool = False) -> tuple[int, bool]:
     index = PAGE.read_text(encoding="utf-8")
     if len(NEWS_BLOCK.findall(index)) != 1:
         raise RuntimeError("Missing or duplicate PAPERS markers in site/index.html")
-    changed_html = write_if_changed(PAGE, NEWS_BLOCK.sub(lambda m: render_news(papers), index))
+    submitted = read_submitted_papers()
+    submitted_html = render_submitted_papers(submitted, papers)
+    changed_html = write_if_changed(PAGE, NEWS_BLOCK.sub(lambda m: submitted_html + render_news(papers), index))
     print(f"Rendered {min(NUMBER_SHOWN, len(papers))} of {len(papers)} cached distinct papers; "
           f"arXiv: {len(incoming_arxiv)} new feed entries; Orbit: {len(incoming_orbit)}; "
           f"{'offline' if offline else 'online'}; {'files changed' if changed_json or changed_html else 'no file changes'}.")
