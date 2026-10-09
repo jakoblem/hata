@@ -1,0 +1,10 @@
+{
+  "_comment": "Optional manually announced submitted manuscripts. Nothing is displayed while papers is empty. Only include submissions approved for public announcement.",
+  "_example": {
+    "title": "Paper title",
+    "authors": ["First Author", "Second Author"],
+    "submitted": "2026-10-09",
+    "journal": "Optional journal name"
+  },
+  "papers": []
+}
