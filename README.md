@@ -28,11 +28,11 @@ The first deployment must be confirmed in the **Actions** tab and the **Pages** 
 The feed is generated daily in `scripts/update_papers.py` using author names in [`config/authors.json`](config/authors.json).
 
 - **arXiv** — queried through the Atom API for full author names/aliases; exact bylines are checked after fetching. Uses the original *first submission date*, not later revision dates.
-- **DTU Orbit** — the script tries to read the public researcher profile pages, find links to publications, and collect their *publication years*. The current public portal is HTML; **this is best-effort scraping, not a DTU-supported stable API**. It may need a change if the portal markup or access rules change.
+- **DTU Orbit** — the script reads each researcher's public `/publications/` page, finds publication links, and collects their *publication years*. The current public portal is HTML; **this is best-effort scraping, not a DTU-supported stable API**. It may need a change if the portal markup or access rules change.
 - **Deduplication** — matches by arXiv identifier, Orbit publication URL or highly similar normalized titles. Results are retained in `site/data/papers.json`; where a paper appears in both, both **Orbit · arXiv** links are shown on a single row.
 - **Dates** — Orbit-only records show a *year*, not a fabricated month/day. A publication year is not the same thing as the first arXiv submission date or the date a record was added to Orbit. List order is therefore approximate for Orbit-only records.
 - **Resilience** — when an upstream source fails, the published static site keeps its last known entries. Browser visitors never wait for arXiv or Orbit.
-- **Completeness** — a five-item **highlights** section is not a complete bibliography. Each researcher card links to their full DTU Orbit record.
+- **Completeness** — a five-item **highlights** section is not a complete bibliography. The homepage links to targeted HATA searches in arXiv and Orbit, while each researcher card links to the individual Orbit profile. Orbit's combined search can miss records, so the individual profiles are the safer route for complete Orbit coverage.
 
 There are verified sample papers from arXiv and Orbit committed into the initial cache. Publication records from Orbit's public pages were checked in October 2026 (for example, *Two results on polynomially-generated wavelet frames and nonorthogonal polynomial frames*, *Weaving information packets* and *Cyclic frames in finite-dimensional Hilbert spaces*). The Orbit parsing algorithm has fixtures and unit tests, but **a live Orbit refresh must still be checked after its first GitHub run**. A guaranteed feed would be better provided by DTU Library via an approved Pure/Orbit API or export.
 
