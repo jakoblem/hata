@@ -32,6 +32,18 @@ ORBIT = b'''<!doctype html><html><body>
 
 
 class UpdateTests(unittest.TestCase):
+    def test_submitted_template_inactive(self):
+        self.assertEqual(p.read_submitted_papers(), [])
+        self.assertEqual(p.render_submitted_papers([], []), "")
+
+    def test_submitted_manuscript_and_deduplication(self):
+        manuscript = {"title": "A study of Gabor frames", "authors": ["Marzieh Hasannasab"], "submitted": "2026-09-03", "journal": ""}
+        output = p.render_submitted_papers([manuscript], [])
+        self.assertIn("SUBMITTED MANUSCRIPT", output)
+        self.assertIn("Not yet publicly available", output)
+        self.assertNotIn("<a href=", output)
+        self.assertEqual(p.render_submitted_papers([manuscript], [{"title": manuscript["title"], "arxiv_id": "2609.12345"}]), "")
+
     def test_query_contains_each_author(self):
         self.assertIn('au:"Jakob Lemvig"', p.create_query(MEMBERS))
 
