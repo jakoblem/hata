@@ -3,6 +3,25 @@
   "notes": "Snapshot of first arXiv submission dates and Orbit publication years. Orbit collection is best-effort HTML parsing (not a stable official feed); no entries are removed on source failure.",
   "papers": [
     {
+      "id": "2609.13116",
+      "title": "The zero set of the Zak transform of B-splines with applications to Gabor frames",
+      "authors": [
+        "Marzieh Hasannasab",
+        "Jakob Lemvig"
+      ],
+      "published": "2026-09-11",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "2609.13116",
+      "url": "https://arxiv.org/abs/2609.13116",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig",
+        "Marzieh Hasannasab"
+      ]
+    },
+    {
       "id": "2601.15883",
       "title": "Directional polynomial frames on spheres",
       "authors": [
@@ -116,12 +135,69 @@
       ]
     },
     {
+      "id": "2506.16888",
+      "title": "Uncertainty Quantification for Linear Inverse Problems with Besov Prior: A Randomize-Then-Optimize Method",
+      "authors": [
+        "Andreas Horst",
+        "Babak Maboudi Afkham",
+        "Yiqiu Dong",
+        "Jakob Lemvig"
+      ],
+      "published": "2025-06-20",
+      "date_precision": "day",
+      "primary_category": "math.NA",
+      "arxiv_id": "2506.16888",
+      "url": "https://arxiv.org/abs/2506.16888",
+      "orbit_url": "https://orbit.dtu.dk/en/publications/uncertainty-quantification-for-linear-inverse-problems-with-besov/",
+      "orbit_year": 2025,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "orbit:a-survey-on-frame-representations-and-operator-orbits",
+      "title": "A Survey on Frame Representations and Operator Orbits",
+      "authors": [],
+      "published": "2024-01-01",
+      "date_precision": "year",
+      "primary_category": "",
+      "arxiv_id": null,
+      "url": null,
+      "orbit_url": "https://orbit.dtu.dk/en/publications/a-survey-on-frame-representations-and-operator-orbits/",
+      "orbit_year": 2024,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "2312.11978",
+      "title": "The mystery of Carleson frames",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab",
+        "Friedrich Philipp",
+        "Diana Stoeva"
+      ],
+      "published": "2023-12-19",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "2312.11978",
+      "url": "https://arxiv.org/abs/2312.11978",
+      "orbit_url": "https://orbit.dtu.dk/en/publications/the-mystery-of-carleson-frames/",
+      "orbit_year": 2024,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
       "id": "2311.01547",
       "title": "On the non-frame property of Gabor systems with Hermite generators and the frame set conjecture",
       "authors": [
         "Andreas Horst",
         "Jakob Lemvig",
-        "Allan Erlang Videbæk"
+        "Allan Erlang Videbaek"
       ],
       "published": "2023-11-02",
       "date_precision": "day",
@@ -132,6 +208,1100 @@
       "orbit_year": 2025,
       "matched_members": [
         "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "2201.00038",
+      "title": "A survey on frame representations via dynamical sampling",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab"
+      ],
+      "published": "2021-12-31",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "2201.00038",
+      "url": "https://arxiv.org/abs/2201.00038",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "2107.03938",
+      "title": "Approximately dual pairs of wavelet frames",
+      "authors": [
+        "Ana Benavente",
+        "Ole Christensen",
+        "Marzieh Hasannasab",
+        "Hong Oh Kim",
+        "Rae Young Kim",
+        "Federico D. Kovac"
+      ],
+      "published": "2021-07-08",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "2107.03938",
+      "url": "https://arxiv.org/abs/2107.03938",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "2106.00511",
+      "title": "Completion versus removal of redundancy by perturbation",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab"
+      ],
+      "published": "2021-06-01",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "2106.00511",
+      "url": "https://arxiv.org/abs/2106.00511",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "2103.10086",
+      "title": "Phase Retrieval and System Identification in Dynamical Sampling via Prony's Method",
+      "authors": [
+        "Robert Beinert",
+        "Marzieh Hasannasab"
+      ],
+      "published": "2021-03-18",
+      "date_precision": "day",
+      "primary_category": "math.NA",
+      "arxiv_id": "2103.10086",
+      "url": "https://arxiv.org/abs/2103.10086",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab"
+      ]
+    },
+    {
+      "id": "2103.07686",
+      "title": "On approximate operator representations of sequences in Banach spaces",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab",
+        "Gabriele Steidl"
+      ],
+      "published": "2021-03-13",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "2103.07686",
+      "url": "https://arxiv.org/abs/2103.07686",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "2102.00536",
+      "title": "Phase Retrieval via Polarization in Dynamical Sampling",
+      "authors": [
+        "Robert Beinert",
+        "Marzieh Hasannasab"
+      ],
+      "published": "2021-01-31",
+      "date_precision": "day",
+      "primary_category": "math.NA",
+      "arxiv_id": "2102.00536",
+      "url": "https://arxiv.org/abs/2102.00536",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab"
+      ]
+    },
+    {
+      "id": "orbit:gabor-windows-supported-on-1-1-and-construction-of-compactly-supp",
+      "title": "Gabor windows supported on [−1, 1] and construction of compactly supported dual windows with optimal smoothness",
+      "authors": [],
+      "published": "2020-01-01",
+      "date_precision": "year",
+      "primary_category": "",
+      "arxiv_id": null,
+      "url": null,
+      "orbit_url": "https://orbit.dtu.dk/en/publications/gabor-windows-supported-on-1-1-and-construction-of-compactly-supp/",
+      "orbit_year": 2020,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "orbit:a-remark-on-dilation-and-modulation-frames-for-lsup2suprsubsub",
+      "title": "A Remark on Dilation-and-Modulation Frames for L 2 (R + )",
+      "authors": [],
+      "published": "2020-01-01",
+      "date_precision": "year",
+      "primary_category": "",
+      "arxiv_id": null,
+      "url": null,
+      "orbit_url": "https://orbit.dtu.dk/en/publications/a-remark-on-dilation-and-modulation-frames-for-lsup2suprsubsub/",
+      "orbit_year": 2020,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1912.10480",
+      "title": "Parseval Proximal Neural Networks",
+      "authors": [
+        "Marzieh Hasannasab",
+        "Johannes Hertrich",
+        "Sebastian Neumayer",
+        "Gerlind Plonka",
+        "Simon Setzer",
+        "Gabriele Steidl"
+      ],
+      "published": "2019-12-19",
+      "date_precision": "day",
+      "primary_category": "math.NA",
+      "arxiv_id": "1912.10480",
+      "url": "https://arxiv.org/abs/1912.10480",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab"
+      ]
+    },
+    {
+      "id": "1912.01416",
+      "title": "A remark on dilation-and-modulation frames for $L^2(\\mathbb{R}_+)$",
+      "authors": [
+        "Jakob Lemvig"
+      ],
+      "published": "2019-12-03",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1912.01416",
+      "url": "https://arxiv.org/abs/1912.01416",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1910.07243",
+      "title": "Modular Riesz bases versus Riesz bases in Hilbert $C^*$-Modules",
+      "authors": [
+        "Marzieh Hasannasab"
+      ],
+      "published": "2019-10-16",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1910.07243",
+      "url": "https://arxiv.org/abs/1910.07243",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab"
+      ]
+    },
+    {
+      "id": "1910.06623",
+      "title": "Alternatives to the EM Algorithm for ML-Estimation of Location, Scatter Matrix and Degree of Freedom of the Student-$t$ Distribution",
+      "authors": [
+        "Marzieh Hasannasab",
+        "Johannes Hertrich",
+        "Friederike Laus",
+        "Gabriele Steidl"
+      ],
+      "published": "2019-10-15",
+      "date_precision": "day",
+      "primary_category": "math.ST",
+      "arxiv_id": "1910.06623",
+      "url": "https://arxiv.org/abs/1910.06623",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab"
+      ]
+    },
+    {
+      "id": "1910.03535",
+      "title": "Approximate frame representations via iterated operator systems",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab"
+      ],
+      "published": "2019-10-08",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1910.03535",
+      "url": "https://arxiv.org/abs/1910.03535",
+      "orbit_url": "https://orbit.dtu.dk/en/publications/approximate-frame-representations-via-iterated-operator-systems/",
+      "orbit_year": 2022,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1902.04537",
+      "title": "Gabor windows supported on $[-1,1]$ and construction of compactly supported dual windows with optimal frequency localization",
+      "authors": [
+        "Jakob Lemvig",
+        "Kamilla Haahr Nielsen"
+      ],
+      "published": "2019-02-12",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1902.04537",
+      "url": "https://arxiv.org/abs/1902.04537",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1804.03438",
+      "title": "Frame Properties of Operator Orbits",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab",
+        "Friedrich Philipp"
+      ],
+      "published": "2018-04-10",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1804.03438",
+      "url": "https://arxiv.org/abs/1804.03438",
+      "orbit_url": "https://orbit.dtu.dk/en/publications/frame-properties-of-operator-orbits/",
+      "orbit_year": 2019,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1804.00077",
+      "title": "Operator representations of sequences and dynamical sampling",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab",
+        "Diana T. Stoeva"
+      ],
+      "published": "2018-03-30",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1804.00077",
+      "url": "https://arxiv.org/abs/1804.00077",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1803.08466",
+      "title": "Dynamical sampling and frame representations with bounded operators",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab",
+        "Ehsan Rashidi"
+      ],
+      "published": "2018-03-22",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1803.08466",
+      "url": "https://arxiv.org/abs/1803.08466",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "orbit:frame-properties-of-systems-arising-via-iterated-actions-of-opera",
+      "title": "Frame properties of systems arising via iterated actions of operators",
+      "authors": [],
+      "published": "2018-01-01",
+      "date_precision": "year",
+      "primary_category": "",
+      "arxiv_id": null,
+      "url": null,
+      "orbit_url": "https://orbit.dtu.dk/en/publications/frame-properties-of-systems-arising-via-iterated-actions-of-opera/",
+      "orbit_year": 2018,
+      "matched_members": [
+        "Marzieh Hasannasab"
+      ]
+    },
+    {
+      "id": "1710.08290",
+      "title": "Construction of scaling partitions of unity",
+      "authors": [
+        "Ole Christensen",
+        "Say Song Goh"
+      ],
+      "published": "2017-10-23",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1710.08290",
+      "url": "https://arxiv.org/abs/1710.08290",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1710.08280",
+      "title": "Gabor frames in $\\ell^2(\\mathbf Z)$ and linear dependence",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab"
+      ],
+      "published": "2017-10-23",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1710.08280",
+      "url": "https://arxiv.org/abs/1710.08280",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1708.04803",
+      "title": "B-spline approximations of the Gaussian, their Gabor frame properties, and approximately dual frames",
+      "authors": [
+        "Ole Christensen",
+        "Hong Oh Kim",
+        "Rae Young Kim"
+      ],
+      "published": "2017-08-16",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1708.04803",
+      "url": "https://arxiv.org/abs/1708.04803",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1708.04204",
+      "title": "The unitary extension principle on locally compact abelian groups",
+      "authors": [
+        "Ole Christensen",
+        "Say Song Goh"
+      ],
+      "published": "2017-08-14",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1708.04204",
+      "url": "https://arxiv.org/abs/1708.04204",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1705.10991",
+      "title": "System bandwidth and the existence of generalized shift-invariant frames",
+      "authors": [
+        "Hartmut Führ",
+        "Jakob Lemvig"
+      ],
+      "published": "2017-05-31",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1705.10991",
+      "url": "https://arxiv.org/abs/1705.10991",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1705.00480",
+      "title": "An open problem concerning operator representations of frames",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab"
+      ],
+      "published": "2017-05-01",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1705.00480",
+      "url": "https://arxiv.org/abs/1705.00480",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1704.08918",
+      "title": "Operator representations of frames: boundedness, duality, and stability",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab"
+      ],
+      "published": "2017-04-28",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1704.08918",
+      "url": "https://arxiv.org/abs/1704.08918",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1704.06510",
+      "title": "Criteria for generalized translation-invariant frames",
+      "authors": [
+        "Jakob Lemvig",
+        "Jordy Timo van Velthoven"
+      ],
+      "published": "2017-04-21",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1704.06510",
+      "url": "https://arxiv.org/abs/1704.06510",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1703.08600",
+      "title": "On Wilson bases in L2(R^d)",
+      "authors": [
+        "Marcin Bownik",
+        "Mads Sielemann Jakobsen",
+        "Jakob Lemvig",
+        "Kasso A. Okoudjou"
+      ],
+      "published": "2017-03-24",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1703.08600",
+      "url": "https://arxiv.org/abs/1703.08600",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1610.04067",
+      "title": "Explicit constructions and properties of generalized shift-invariant systems in $L^2(\\mathbb{R})$",
+      "authors": [
+        "Ole Christensen",
+        "Marzieh Hasannasab",
+        "Jakob Lemvig"
+      ],
+      "published": "2016-10-13",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1610.04067",
+      "url": "https://arxiv.org/abs/1610.04067",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig",
+        "Marzieh Hasannasab",
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1602.08580",
+      "title": "Fractional and Complex Pseudo-Splines and the Construction of Parseval Frames",
+      "authors": [
+        "Ole Christensen",
+        "Brigitte Forster",
+        "Peter Massopust"
+      ],
+      "published": "2016-02-27",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1602.08580",
+      "url": "https://arxiv.org/abs/1602.08580",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1602.05722",
+      "title": "On partition of unities generated by entire functions and Gabor frames in $\\ltrd$ and $\\ell^2(\\mzd)$",
+      "authors": [
+        "Ole Christensen",
+        "Hong Oh Kim",
+        "Rae Young Kim"
+      ],
+      "published": "2016-02-18",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1602.05722",
+      "url": "https://arxiv.org/abs/1602.05722",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1602.05717",
+      "title": "On the Gabor frame set for compactly supported continuous functions",
+      "authors": [
+        "Ole Christensen",
+        "Hong Oh Kim",
+        "Rae Young Kim"
+      ],
+      "published": "2016-02-18",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1602.05717",
+      "url": "https://arxiv.org/abs/1602.05717",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1601.07114",
+      "title": "Wavelets for non-expanding dilations and the lattice counting estimate",
+      "authors": [
+        "Marcin Bownik",
+        "Jakob Lemvig"
+      ],
+      "published": "2016-01-26",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1601.07114",
+      "url": "https://arxiv.org/abs/1601.07114",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1511.09470",
+      "title": "On some Hermite series identities and their applications to Gabor analysis",
+      "authors": [
+        "Jakob Lemvig"
+      ],
+      "published": "2015-11-30",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1511.09470",
+      "url": "https://arxiv.org/abs/1511.09470",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1509.06263",
+      "title": "On various R-duals and the duality principle",
+      "authors": [
+        "Diana T. Stoeva",
+        "Ole Christensen"
+      ],
+      "published": "2015-09-21",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1509.06263",
+      "url": "https://arxiv.org/abs/1509.06263",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1507.03982",
+      "title": "Counterexamples to the B-spline conjecture for Gabor frames",
+      "authors": [
+        "Jakob Lemvig",
+        "Kamilla Haahr Nielsen"
+      ],
+      "published": "2015-07-14",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1507.03982",
+      "url": "https://arxiv.org/abs/1507.03982",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1504.05347",
+      "title": "Density and duality theorems for regular Gabor frames",
+      "authors": [
+        "Mads Sielemann Jakobsen",
+        "Jakob Lemvig"
+      ],
+      "published": "2015-04-21",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1504.05347",
+      "url": "https://arxiv.org/abs/1504.05347",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1503.02160",
+      "title": "On Gabor frames generated by sign-changing windows and B-splines",
+      "authors": [
+        "Ole Christensen",
+        "Hong Oh Kim",
+        "Rae Young Kim"
+      ],
+      "published": "2015-03-07",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1503.02160",
+      "url": "https://arxiv.org/abs/1503.02160",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1411.5059",
+      "title": "Co-compact Gabor systems on locally compact abelian groups",
+      "authors": [
+        "Mads Sielemann Jakobsen",
+        "Jakob Lemvig"
+      ],
+      "published": "2014-11-18",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1411.5059",
+      "url": "https://arxiv.org/abs/1411.5059",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1405.4948",
+      "title": "Reproducing formulas for generalized translation invariant systems on locally compact abelian groups",
+      "authors": [
+        "Mads Sielemann Jakobsen",
+        "Jakob Lemvig"
+      ],
+      "published": "2014-05-20",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1405.4948",
+      "url": "https://arxiv.org/abs/1405.4948",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1404.3183",
+      "title": "On R-duals and the duality principle in Gabor analysis",
+      "authors": [
+        "Diana T. Stoeva",
+        "Ole Christensen"
+      ],
+      "published": "2014-04-11",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1404.3183",
+      "url": "https://arxiv.org/abs/1404.3183",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1402.3682",
+      "title": "Directional time frequency analysis via continuous frame",
+      "authors": [
+        "Ole Christensen",
+        "Brigitte Forster",
+        "Peter Massopust"
+      ],
+      "published": "2014-02-15",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1402.3682",
+      "url": "https://arxiv.org/abs/1402.3682",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1401.0862",
+      "title": "On extensions of wavelet systems to dual pairs of frames",
+      "authors": [
+        "Ole Christensen",
+        "Hong Oh Kim",
+        "Rae Young Kim"
+      ],
+      "published": "2014-01-05",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1401.0862",
+      "url": "https://arxiv.org/abs/1401.0862",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1308.5557",
+      "title": "On entire functions restricted to intervals, partition of unities, and dual Gabor frames",
+      "authors": [
+        "Ole Christensen",
+        "Hong Oh Kim",
+        "Rae Young Kim"
+      ],
+      "published": "2013-08-26",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1308.5557",
+      "url": "https://arxiv.org/abs/1308.5557",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1308.5065",
+      "title": "Six problems in frame theory",
+      "authors": [
+        "Ole Christensen"
+      ],
+      "published": "2013-08-23",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1308.5065",
+      "url": "https://arxiv.org/abs/1308.5065",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "1204.5062",
+      "title": "Sparsity and spectral properties of dual frames",
+      "authors": [
+        "Felix Krahmer",
+        "Gitta Kutyniok",
+        "Jakob Lemvig"
+      ],
+      "published": "2012-04-23",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1204.5062",
+      "url": "https://arxiv.org/abs/1204.5062",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1204.2967",
+      "title": "Oversampling of wavelet frames for real dilations",
+      "authors": [
+        "Marcin Bownik",
+        "Jakob Lemvig"
+      ],
+      "published": "2012-04-13",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1204.2967",
+      "url": "https://arxiv.org/abs/1204.2967",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1202.6350",
+      "title": "Prime tight frames",
+      "authors": [
+        "Jakob Lemvig",
+        "Christopher Miller",
+        "Kasso A. Okoudjou"
+      ],
+      "published": "2012-02-28",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1202.6350",
+      "url": "https://arxiv.org/abs/1202.6350",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1109.5993",
+      "title": "Optimally sparse approximations of 3D functions by compactly supported shearlet frames",
+      "authors": [
+        "Gitta Kutyniok",
+        "Jakob Lemvig",
+        "Wang-Q Lim"
+      ],
+      "published": "2011-09-27",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1109.5993",
+      "url": "https://arxiv.org/abs/1109.5993",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1106.1325",
+      "title": "Shearlets and Optimally Sparse Approximations",
+      "authors": [
+        "Gitta Kutyniok",
+        "Jakob Lemvig",
+        "Wang-Q Lim"
+      ],
+      "published": "2011-06-07",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1106.1325",
+      "url": "https://arxiv.org/abs/1106.1325",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1009.4359",
+      "title": "Compactly Supported Shearlets",
+      "authors": [
+        "Gitta Kutyniok",
+        "Jakob Lemvig",
+        "Wang-Q Lim"
+      ],
+      "published": "2010-09-22",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1009.4359",
+      "url": "https://arxiv.org/abs/1009.4359",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "1009.4351",
+      "title": "Constructing pairs of dual bandlimited frame wavelets in $L^2(\\mathbb{R}^n)$",
+      "authors": [
+        "Jakob Lemvig"
+      ],
+      "published": "2010-09-22",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "1009.4351",
+      "url": "https://arxiv.org/abs/1009.4351",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "0811.3588",
+      "title": "Approximately dual frame pairs in Hilbert spaces and applications to Gabor frames",
+      "authors": [
+        "Ole Christensen",
+        "Richard S. Laugesen"
+      ],
+      "published": "2008-11-21",
+      "date_precision": "day",
+      "primary_category": "math.CA",
+      "arxiv_id": "0811.3588",
+      "url": "https://arxiv.org/abs/0811.3588",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "math/0008174",
+      "title": "Perturbations of Weyl-Heisenberg frames",
+      "authors": [
+        "Peter G. Casazza",
+        "Ole Christensen",
+        "Mark C. Lammers"
+      ],
+      "published": "2000-08-22",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "math/0008174",
+      "url": "https://arxiv.org/abs/math/0008174",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "math/9910169",
+      "title": "Weyl-Heisenberg Frames, Translation Invariant Systems and the Walnut Representation",
+      "authors": [
+        "Peter G. Casazza",
+        "Ole Christensen",
+        "A. J. E. M. Janssen"
+      ],
+      "published": "1999-10-29",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "math/9910169",
+      "url": "https://arxiv.org/abs/math/9910169",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "math/9812159",
+      "title": "Classifying Tight Weyl-Heisenberg Frames",
+      "authors": [
+        "Peter G. Casazza",
+        "Ole Christensen"
+      ],
+      "published": "1998-12-30",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "math/9812159",
+      "url": "https://arxiv.org/abs/math/9812159",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "math/9811146",
+      "title": "Weyl-Heisenberg frames for subspaces of L^2(R)",
+      "authors": [
+        "Peter G. Casazza",
+        "Ole Christensen"
+      ],
+      "published": "1998-11-24",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "math/9811146",
+      "url": "https://arxiv.org/abs/math/9811146",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "math/9811144",
+      "title": "Frames of translates",
+      "authors": [
+        "Peter G. Casazza",
+        "Ole Christensen",
+        "Nigel J. Kalton"
+      ],
+      "published": "1998-11-24",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "math/9811144",
+      "url": "https://arxiv.org/abs/math/9811144",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "math/9509215",
+      "title": "Frames containing a Riesz basis and preservation of this property under perturbation",
+      "authors": [
+        "Peter G. Casazza",
+        "Ole Christensen"
+      ],
+      "published": "1995-09-22",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "math/9509215",
+      "url": "https://arxiv.org/abs/math/9509215",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "math/9509214",
+      "title": "Hilbert space frames containing a Riesz basis and Banach spaces which have no subspace isomorphic to $c_0$",
+      "authors": [
+        "Peter G. Casazza",
+        "Ole Christensen"
+      ],
+      "published": "1995-09-22",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "math/9509214",
+      "url": "https://arxiv.org/abs/math/9509214",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Ole Christensen"
       ]
     }
   ]
