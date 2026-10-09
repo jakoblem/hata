@@ -78,6 +78,10 @@ h2 { margin: 23px 0 0; font-size: clamp(43px, 4.25vw, 60px); line-height: 1.13; 
 .focus-card p { margin: 0 0 23px; font-size: 13px; line-height: 1.75; color: #66737e; }
 .focus-detail { margin-top: auto; font-size: 9px; line-height: 1.5; letter-spacing: .09em; color: #a0a5a2; font-weight: 750; }
 .news-section { background: var(--warm); }
+.group-news { margin-top: 58px; }
+.group-news > .section-label { margin-bottom: 18px; }
+.group-news:not(:has(.paper-item)) { display: none; }
+#latest-papers { scroll-margin-top: 100px; margin-bottom: 18px; }
 .news-heading { margin-bottom: 43px; }
 .news-description p:first-child { font-size: 14px; line-height: 1.75; color: #68727a; margin: 0 0 17px; }
 .feed-label { display: flex; align-items: center; gap: 9px; font-size: 9px; letter-spacing: .08em; font-weight: 750; color: #87918a; margin: 0; }
