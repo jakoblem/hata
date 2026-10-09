@@ -8,6 +8,10 @@ A low-maintenance static homepage for HATA at DTU Compute's Mathematics section.
 
 The web site is plain HTML/CSS/images in [`site/`](site/). No PHP, CMS, JavaScript framework, browser-side requests to publication APIs, build dependencies, cookies or tracking. A Python standard-library script compiles research highlights into static HTML. No knowledge of Git or Python is needed for visitors.
 
+## Submitted manuscripts not yet online
+
+Optional manuscripts are listed in [`config/submitted-papers.json`](config/submitted-papers.json). The `_example` is documentation only; **`"papers": []` keeps this feature inactive**. When a paper has been approved for public announcement, add an entry to `papers` with `title`, `authors` (list), `submitted` (YYYY-MM-DD) and optional `journal`. No PDF or link is needed. It appears as a submitted manuscript with no clickable title. The publication updater suppresses it automatically when an arXiv or Orbit record with the same title is found; remove the manual entry when no longer needed. Do not add confidential submission details without coauthor approval.
+
 ## First publication to GitHub Pages
 
 1. Create a **public, empty repository** called `hata` under the `jakoblem` account, with default branch `main`, **without** an initial README or gitignore. Do not create a license yet; choose one after reviewing institutional/licensing constraints on DTU portrait images.
