@@ -1,0 +1,81 @@
+name: Publish HATA website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # A daily UTC schedule; arXiv may have publication/indexing delays.
+    - cron: '17 5 * * *'
+
+concurrency:
+  group: hata-publish
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Best-effort commit of updated records / inactivity keepalive.
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Refresh arXiv and DTU Orbit; build static site
+        run: python scripts/update_papers.py
+      - name: Commit last known publications (if branch settings allow)
+        # GitHub can disable schedules in inactive public repositories after 60 days.
+        # Keep-alive commits are best effort and cannot bypass branch protection.
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        shell: bash
+        run: |
+          git config user.name "HATA publications bot"
+          git config user.email "hata-updates[bot]@users.noreply.github.com"
+          git add site/index.html site/data/papers.json
+          if ! git diff --staged --quiet; then
+            git commit -m "Refresh HATA research publications [skip ci]"
+            git push origin HEAD:main
+          elif [ "${{ github.event_name }}" = "schedule" ]; then
+            latest=$(git log -1 --format=%ct)
+            now=$(date +%s)
+            if [ "$(( now - latest ))" -gt 3456000 ]; then
+              git commit --allow-empty -m "Keep HATA publication schedule active [skip ci]"
+              git push origin HEAD:main
+            fi
+          fi
+      - name: Copy static site to DTU server (OPTIONAL, off by default)
+        # Enable only after IT confirms the SSH host and dedicated docroot.
+        if: ${{ vars.DTU_DEPLOY_ENABLED == 'true' }}
+        env:
+          DTU_SSH_HOST: ${{ vars.DTU_SSH_HOST }}
+          DTU_SSH_USER: ${{ vars.DTU_SSH_USER }}
+          DTU_WEB_ROOT: ${{ vars.DTU_WEB_ROOT }}
+          DTU_SSH_PORT: ${{ vars.DTU_SSH_PORT }}
+          DTU_SSH_PRIVATE_KEY: ${{ secrets.DTU_SSH_PRIVATE_KEY }}
+          DTU_SSH_KNOWN_HOSTS: ${{ secrets.DTU_SSH_KNOWN_HOSTS }}
+        run: bash scripts/deploy_dtu.sh
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - id: deploy
+        name: Publish to GitHub Pages
+        uses: actions/deploy-pages@v4

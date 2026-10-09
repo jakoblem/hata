@@ -1,0 +1,27 @@
+{
+  "authors": [
+    {
+      "name": "Ole Christensen",
+      "arxiv_names": [
+        "Ole Christensen"
+      ],
+      "orbit_slug": "ole-christensen"
+    },
+    {
+      "name": "Jakob Lemvig",
+      "arxiv_names": [
+        "Jakob Lemvig"
+      ],
+      "orbit_slug": "jakob-lemvig"
+    },
+    {
+      "name": "Marzieh Hasannasab",
+      "arxiv_names": [
+        "Marzieh Hasannasab",
+        "Marzieh Hasannasabjaldehbakhani",
+        "Marzieh Hasannasab Jaldehbakhani"
+      ],
+      "orbit_slug": "marzieh-hasannasabjaldehbakhani"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+# Alternative to GitHub Pages for DTU's self-hosted GitLab.
+# GitLab Pages must be enabled by the instance administrator. In your GitLab
+# project, create a Pipeline Schedule on the default branch to rebuild daily.
+stages:
+  - deploy
+
+pages:
+  image: python:3.12-slim
+  stage: deploy
+  script:
+    - python -m unittest discover -s tests -v
+    - python scripts/update_papers.py
+    - mkdir -p public
+    - cp -R site/. public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

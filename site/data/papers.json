@@ -1,0 +1,138 @@
+{
+  "source": "arXiv and DTU Orbit",
+  "notes": "Snapshot of first arXiv submission dates and Orbit publication years. Orbit collection is best-effort HTML parsing (not a stable official feed); no entries are removed on source failure.",
+  "papers": [
+    {
+      "id": "2601.15883",
+      "title": "Directional polynomial frames on spheres",
+      "authors": [
+        "Marzieh Hasannasab",
+        "Larissa Kaldewey",
+        "Frederic Schoppert"
+      ],
+      "published": "2026-01-22",
+      "date_precision": "day",
+      "primary_category": "math.CA",
+      "arxiv_id": "2601.15883",
+      "url": "https://arxiv.org/abs/2601.15883",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Marzieh Hasannasab"
+      ]
+    },
+    {
+      "id": "2601.07642",
+      "title": "A new family of hyperbolic slits in the Gabor frame set of B-spline generators",
+      "authors": [
+        "Jakob Lemvig"
+      ],
+      "published": "2026-01-12",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "2601.07642",
+      "url": "https://arxiv.org/abs/2601.07642",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "orbit:two-results-on-polynomially-generated-wavelet-frames-and-nonortho",
+      "title": "Two results on polynomially-generated wavelet frames and nonorthogonal polynomial frames",
+      "authors": [
+        "Ole Christensen",
+        "Hong Oh Kim",
+        "Rae Young Kim"
+      ],
+      "published": "2026-01-01",
+      "date_precision": "year",
+      "primary_category": "",
+      "arxiv_id": null,
+      "url": null,
+      "orbit_url": "https://orbit.dtu.dk/en/publications/two-results-on-polynomially-generated-wavelet-frames-and-nonortho/",
+      "orbit_year": 2026,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "2509.07503",
+      "title": "Weaving Information Packets",
+      "authors": [
+        "Ole Christensen",
+        "Hong Oh Kim",
+        "Rae Young Kim"
+      ],
+      "published": "2025-09-09",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "2509.07503",
+      "url": "https://arxiv.org/abs/2509.07503",
+      "orbit_url": "https://orbit.dtu.dk/en/publications/weaving-information-packets/",
+      "orbit_year": 2025,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "2508.17088",
+      "title": "Cyclic frames in finite-dimensional Hilbert spaces",
+      "authors": [
+        "Ole Christensen",
+        "Navneet Redhu",
+        "Niraj K. Shukla"
+      ],
+      "published": "2025-08-23",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "2508.17088",
+      "url": "https://arxiv.org/abs/2508.17088",
+      "orbit_url": "https://orbit.dtu.dk/en/publications/cyclic-frames-in-finite-dimensional-hilbert-spaces/",
+      "orbit_year": 2026,
+      "matched_members": [
+        "Ole Christensen"
+      ]
+    },
+    {
+      "id": "2506.18846",
+      "title": "Bayesian decomposition using Besov priors",
+      "authors": [
+        "Andreas Horst",
+        "Babak Maboudi Afkham",
+        "Yiqiu Dong",
+        "Jakob Lemvig"
+      ],
+      "published": "2025-06-23",
+      "date_precision": "day",
+      "primary_category": "stat.CO",
+      "arxiv_id": "2506.18846",
+      "url": "https://arxiv.org/abs/2506.18846",
+      "orbit_url": "https://orbit.dtu.dk/en/publications/bayesian-decomposition-using-besov-priors/",
+      "orbit_year": 2025,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
+      "id": "2311.01547",
+      "title": "On the non-frame property of Gabor systems with Hermite generators and the frame set conjecture",
+      "authors": [
+        "Andreas Horst",
+        "Jakob Lemvig",
+        "Allan Erlang Videbæk"
+      ],
+      "published": "2023-11-02",
+      "date_precision": "day",
+      "primary_category": "math.CA",
+      "arxiv_id": "2311.01547",
+      "url": "https://arxiv.org/abs/2311.01547",
+      "orbit_url": "https://orbit.dtu.dk/en/publications/on-the-non-frame-property-of-gabor-systems-with-hermite-generator/",
+      "orbit_year": 2025,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    }
+  ]
+}
