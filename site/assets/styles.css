@@ -68,7 +68,7 @@ h1 em, h2 em, .publication-panel h3 em { color: var(--red); font-weight: 400; }
 h2 { margin: 23px 0 0; font-size: clamp(43px, 4.25vw, 60px); line-height: 1.13; letter-spacing: -.046em; }
 .section-lead { font-size: 15px; line-height: 1.9; color: #5f6c78; margin: 0 0 6px; max-width: 390px; }
 .research-section { background: var(--white); }
-.focus-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-left: 1px solid var(--line); border-top: 1px solid var(--line); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-left: 1px solid var(--line); border-top: 1px solid var(--line); }
 .focus-card { display: flex; flex-direction: column; min-height: 302px; padding: 26px 22px 26px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background .2s ease; }
 .focus-card:hover { background: #f8f8f4; }
 .focus-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 36px; }
