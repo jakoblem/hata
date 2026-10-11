@@ -6,26 +6,95 @@ A low-maintenance static homepage for HATA at DTU Compute's Mathematics section.
 **Repository:** https://github.com/jakoblem/hata  
 **Planned DTU address:** https://hata.compute.dtu.dk/
 
-The web site is plain HTML/CSS/images in [`site/`](site/). No PHP, CMS, JavaScript framework, browser-side requests to publication APIs, build dependencies, cookies or tracking. A Python standard-library script compiles research highlights into static HTML. No knowledge of Git or Python is needed for visitors.
+The published site consists of plain HTML/CSS/images in [`site/`](site/), generated from an HTML template and small TOML content files. No PHP, CMS, JavaScript framework, browser-side publication API requests, cookies or tracking. Python 3.12's standard library handles the build; site visitors need no special software.
 
-## Submitted manuscripts not yet online
+## How to update the homepage
 
-Optional manuscripts are listed in [`config/submitted-papers.json`](config/submitted-papers.json). The `_example` is documentation only; **`"papers": []` keeps this feature inactive**. When a paper has been approved for public announcement, add an entry to `papers` with `title`, `authors` (list), `submitted` (YYYY-MM-DD) and optional `journal`. No PDF or link is needed. It appears as a submitted manuscript with no clickable title. The publication updater suppresses it automatically when an arXiv or Orbit record with the same title is found; remove the manual entry when no longer needed. Do not add confidential submission details without coauthor approval.
+**For routine updates, edit only two human-readable files in the repository:**
 
-## First publication to GitHub Pages
+| What you want to add | Where to edit |
+| --- | --- |
+| Research visit, talk, conference, defence, award, other announcement | [\`content/news.toml\`](content/news.toml) |
+| Submitted/accepted manuscript, or paper absent from arXiv and DTU Orbit | [\`content/papers.toml\`](content/papers.toml) |
+| Staff member or arXiv/Orbit author alias | [\`config/authors.json\`](config/authors.json) (infrequent) |
 
-1. Create a **public, empty repository** called `hata` under the `jakoblem` account, with default branch `main`, **without** an initial README or gitignore. Do not create a license yet; choose one after reviewing institutional/licensing constraints on DTU portrait images.
-2. Add the complete contents of this project to the **root** of the repository (not the `HATA-homepage/` wrapper directory).
-3. In GitHub: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-4. In GitHub: **Settings → Actions → General → Workflow permissions**, select **Read and write permissions** if the controls are available. This is for the optional commit of refreshed publication data. Publishing Pages still works when branch protection blocks such commits.
-5. Open **Actions → Publish HATA website → Run workflow**. This runs the unit tests, tries to refresh arXiv and Orbit, and publishes the static site. It also runs on new commits and daily at `05:17 UTC`.
-6. Check the site at **https://jakoblem.github.io/hata/**. The source repository URL `github.com/jakoblem/hata` is not the hosted site.
+**Do not edit \`site/index.html\` directly.** It is the build output. The page layout and surrounding HTML live in [\`templates/index.html\`](templates/index.html). Automatic publication updates use the existing [\`scripts/update_papers.py\`](scripts/update_papers.py), and the TOML renderer is [\`scripts/content_build.py\`](scripts/content_build.py).
 
-The first deployment must be confirmed in the **Actions** tab and the **Pages** settings. This is a deployment plan; nothing is automatically published merely by downloading this ZIP.
+### Easiest way: edit on GitHub
+
+1. Open [\`content/news.toml\`](content/news.toml) or [\`content/papers.toml\`](content/papers.toml) on GitHub.
+2. Click the pencil (**Edit this file**).
+3. Copy an existing \`[[news]]\` or \`[[papers]]\` block, change the values, and commit the change to \`main\` (or propose a pull request for review).
+4. Open **Actions → Publish HATA website** to confirm the build succeeds. A change to \`main\` triggers the site build; a scheduled daily run also refreshes arXiv/Orbit records.
+5. Check [the GitHub Pages site](https://jakoblem.github.io/hata/) once deployment finishes. Publishing to the separate DTU hostname depends on the optional DTU deployment configuration.
+
+No local software is required when editing through GitHub. The file format is **TOML**, so text values must have quotation marks, but entries do not need commas between them. The examples below are illustrative; **do not publish fictional entries**.
+
+### Add a news item
+
+Add a block in \`content/news.toml\`:
+
+```toml
+[[news]]
+date = "2026-10"
+category = "RESEARCH VISIT · OTH REGENSBURG"
+title = "Research visit"
+description = "Two HATA researchers visit colleagues for research discussions."
+url = "https://example.org/visit"
+link_text = "Host information"
+```
+
+The required fields are \`date\`, \`category\`, \`title\`, and \`description\`. The link fields \`url\`, \`link_text\` and \`link_aria_label\` are optional; omit them for unlinked news. \`year_tag\` is an optional short label used alongside month-only/year-only dates (e.g. \`"VISIT"\`). Use \`*italics*\` in descriptions to emphasize a thesis or paper title. Other HTML and Markdown are treated as text and escaped.
+
+Dates must be **quoted strings**: \`"2026-10-14"\` (specific day), \`"2026-10"\` (known month) or \`"2026"\` (year only). Prefer a full date when known; do not invent missing days. Items are sorted newest first. Keep announcements short so the homepage remains focused.
+
+### Add a paper not yet visible in arXiv/Orbit
+
+Add a block in \`content/papers.toml\`:
+
+```toml
+[[papers]]
+title = "Example mathematical manuscript"
+authors = ["Ole Christensen", "Marzieh Hasannasab"]
+status = "submitted"
+date = "2026-10-09"
+journal = "Example Journal"
+```
+
+The required fields are \`title\`, \`authors\` (an array of names), \`status\` and \`date\`. Accepted statuses are **\`submitted\`**, **\`accepted\`**, and **\`published\`**. The optional fields are \`journal\`, \`doi\` (for example \`"10.1000/example"\`) and \`url\` (a direct HTTPS link). The homepage displays plain, nonclickable titles when no link is available. Use a publication year such as \`"2026"\` when the precise date is unknown; never pretend that a publication-year record has a known January 1 publication date.
+
+The build checks manually supplied titles against the arXiv/Orbit cache and suppresses manual copies when a matching publication appears, so one paper should not appear twice. Remove superseded manual records when convenient. Manuscripts not publicly available should only be announced with coauthor approval.
+
+### What happens automatically
+
+- arXiv and DTU Orbit are checked daily by GitHub Actions. Their publications are cached in \`site/data/papers.json\` and shown as research highlights.
+- Any manual papers absent from those sources are rendered into the same **Latest papers** list.
+- Entries in \`content/news.toml\` appear separately under **Other news**.
+- Each build combines all sources with the immutable \`templates/index.html\` structure and writes a static \`site/index.html\`.
+- Validation rejects invalid dates, malformed TOML, unsafe links and incomplete records rather than silently publishing bad content. A failed build leaves the previously published Pages site intact.
+- Routine GitHub commits need no manual rebuild: the publishing workflow runs automatically on pushes to \`main\`.
+
+### Check changes locally (optional)
+
+From the repository root with Python **3.12+** installed:
+
+```sh
+python3 -m unittest discover -s tests -v
+python3 scripts/update_papers.py --offline
+python3 -m http.server 8000 --directory site
+```
+
+Open http://localhost:8000/ to preview. \`--offline\` uses the last cached publication data; omitting it fetches newer data from arXiv and Orbit. Do not commit generated changes blindly; review them as with any other website change.
+
+## GitHub Pages and publication workflow
+
+The repository is [jakoblem/hata](https://github.com/jakoblem/hata) and its Pages site is [jakoblem.github.io/hata](https://jakoblem.github.io/hata/). Publishing requires **Settings → Pages → Source: GitHub Actions** and Actions permissions suitable for deployment. The workflow in [\`.github/workflows/publish.yml\`](.github/workflows/publish.yml) builds on pushes to \`main\`, on manual **Run workflow**, and daily at 05:17 UTC. It runs tests, refreshes papers, renders HTML, and uploads \`site/\` as the Pages artifact. As a best effort it also commits refreshed \`site/index.html\` and the paper cache back to \`main\`; branch protection may prevent that commit without blocking Pages deployment.
+
+The canonical DTU hostname, https://hata.compute.dtu.dk/, is separately hosted and must be deployed using the optional, IT-approved mechanism described below. Merely publishing GitHub Pages does not update that hostname.
 
 ## Research news: arXiv + DTU Orbit
 
-The feed is generated daily in `scripts/update_papers.py` using author names in [`config/authors.json`](config/authors.json).
+The automatic publication feed is generated daily by [`scripts/update_papers.py`](scripts/update_papers.py) using author names in [`config/authors.json`](config/authors.json). On each build it is combined with manual entries in [`content/papers.toml`](content/papers.toml), and the Other news section is read from [`content/news.toml`](content/news.toml).
 
 - **arXiv** — queried through the Atom API for full author names/aliases; exact bylines are checked after fetching. Uses the original *first submission date*, not later revision dates.
 - **DTU Orbit** — the script reads each researcher's public `/publications/` page, finds publication links, and collects their *publication years*. The current public portal is HTML; **this is best-effort scraping, not a DTU-supported stable API**. It may need a change if the portal markup or access rules change.
@@ -95,30 +164,29 @@ The canonical HATA domain is hosted by DTU; it should not be set as a GitHub Pag
 
 ## Local development
 
-```sh
-python3 -m unittest discover -s tests -v
-python3 scripts/update_papers.py --offline  # renders last-known cache without network
-python3 scripts/update_papers.py            # fetches from both sources
-python3 -m http.server 8000 --directory site
-# open http://localhost:8000
-```
+The commands above run the unit tests, build offline, and start a preview server. For an online refresh use `python3 scripts/update_papers.py` without `--offline`.
 
 The deployable site is the complete **contents** of `site/`, not the project root.
 
 ```
+content/news.toml             # Manual news entries; edit here
+content/papers.toml           # Manual submitted/accepted/published papers; edit here
+templates/index.html          # Source HTML with generated-content slots
 site/
-  index.html
+  index.html                  # Generated page: do not hand edit
   assets/styles.css
   assets/analysis.svg
-  assets/people/                # Historical fallback headshots
-  assets/papers/                # Optimized figure from supplied PDF
-  data/papers.json              # Last known merged records
-config/authors.json             # Authors and Orbit profile slugs
-scripts/update_papers.py        # Fetch, merge, deduplicate, render
-scripts/deploy_dtu.sh           # Optional GitHub → DTU SSH upload
-scripts/pull_dtu.sh             # Optional DTU cron pull
-.github/workflows/publish.yml   # Daily GitHub workflow and Pages publish
-tests/test_update_papers.py     # Offline fixtures and tests
+  assets/people/              # Historical fallback headshots
+  assets/papers/              # Optimized figure from supplied PDF
+  data/papers.json            # Last-known merged arXiv + Orbit records
+config/authors.json           # Authors and Orbit profile slugs
+scripts/content_build.py      # TOML parsing and safe HTML rendering
+scripts/update_papers.py      # Fetch, merge, deduplicate, build
+scripts/deploy_dtu.sh         # Optional GitHub → DTU SSH upload
+scripts/pull_dtu.sh           # Optional DTU cron pull
+.github/workflows/publish.yml # Daily workflow and Pages publication
+tests/test_content_build.py   # Content parsing/build tests
+tests/test_update_papers.py   # arXiv/Orbit fixtures and tests
 ```
 
 The PHP-based historical PmWiki website was used for background and locally hosted fallback photographs only. It is not deployed.

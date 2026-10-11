@@ -1,0 +1,16 @@
+# Only use this file for HATA papers not (yet) covered by arXiv/DTU Orbit.
+# For a public announcement of an unpublished submission, get coauthor approval.
+# Add one [[papers]] block per paper. Accepted statuses: submitted, accepted, published.
+# Date must be a quoted string: "2026-10-09", "2026-10", or "2026".
+# journal, doi and url are optional; use a DOI like "10.1000/xyz" (not a DOI URL).
+# Entries automatically disappear from the manual section if an arXiv/Orbit
+# paper with a matching title is found; remember to clean up older entries.
+
+# Example (remove leading # from every line to enable):
+# [[papers]]
+# title = "A paper on frame theory"
+# authors = ["Ole Christensen", "Marzieh Hasannasab"]
+# status = "submitted"
+# date = "2026-10-09"
+# journal = "Example Journal"
+# doi = "10.1000/example"
