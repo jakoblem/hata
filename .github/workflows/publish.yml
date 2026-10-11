@@ -3,6 +3,8 @@ name: Publish HATA website
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
   schedule:
     # A daily UTC schedule; arXiv may have publication/indexing delays.
@@ -13,7 +15,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  verify-content:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Build static site from cached publications
+        run: python scripts/update_papers.py --offline
+      - name: Verify initial TOML migration preserves generated HTML
+        if: github.head_ref == 'feature/toml-content'
+        run: git diff --exit-code -- site/index.html
+
   build:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: write # Best-effort commit of updated records / inactivity keepalive.
