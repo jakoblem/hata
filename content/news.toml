@@ -1,0 +1,24 @@
+# Group announcements shown under "Other news" on the HATA homepage.
+# Add a [[news]] block for each visit, talk, conference, defence, etc.
+# Dates are quoted: "2026-10-14", "2026-10" (month only), or "2026".
+# Text is plain text; enclose words in *asterisks* for italics.
+# The url, link_text, link_aria_label and year_tag fields are optional.
+
+[[news]]
+date = "2026-10"
+year_tag = "VISIT"
+category = "RESEARCH VISIT · OTH REGENSBURG"
+title = "Ole Christensen and Marzieh Hasannasab to visit Jürgen Frikel"
+description = "During the week of 12 October 2026, Ole Christensen and Marzieh Hasannasab will make a two-day visit to Prof. Jürgen Frikel of OTH Regensburg."
+url = "https://www.oth-regensburg.de/personen/detailansicht/juergen-frikel"
+link_text = "Jürgen Frikel · OTH Regensburg"
+link_aria_label = "Host information"
+
+[[news]]
+date = "2026-09-03"
+category = "PHD DEFENCE · NTNU"
+title = "Marzieh Hasannasab served on the PhD defence committee at NTNU"
+description = "On 3 September 2026, Marzieh Hasannasab served as a member of the PhD defence committee for Erling Arnold Tønseth Svela’s thesis, *Quantum harmonic and time-frequency methods for concentration problems in phase space*, at NTNU."
+url = "https://www.ntnu.edu/employees/franz.luef"
+link_text = "NTNU researcher page"
+link_aria_label = "Thesis information"
