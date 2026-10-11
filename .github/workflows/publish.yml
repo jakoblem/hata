@@ -27,9 +27,6 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Build static site from cached publications
         run: python scripts/update_papers.py --offline
-      - name: Verify initial TOML migration preserves generated HTML
-        if: github.head_ref == 'feature/toml-content'
-        run: git diff --exit-code -- site/index.html
 
   build:
     if: github.event_name != 'pull_request'
