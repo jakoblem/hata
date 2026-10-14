@@ -31,6 +31,8 @@ jobs:
   build:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    outputs:
+      sources_degraded: ${{ steps.refresh.outputs.degraded }}
     permissions:
       contents: write # Best-effort commit of updated records / inactivity keepalive.
     steps:
@@ -43,7 +45,26 @@ jobs:
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
       - name: Refresh arXiv and DTU Orbit; build static site
-        run: python scripts/update_papers.py
+        id: refresh
+        shell: bash
+        run: |
+          set +e
+          python scripts/update_papers.py
+          result=$?
+          set -e
+          if [ "$result" -eq 2 ]; then
+            echo 'degraded=true' >> "$GITHUB_OUTPUT"
+            echo '::warning::Publication source refresh failed; publishing retained cache. See source-health job and diagnostic artifact.'
+          else
+            echo 'degraded=false' >> "$GITHUB_OUTPUT"
+            exit "$result"
+          fi
+      - name: Preserve publication source diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: publication-source-health
+          path: site/data/source-status.json
+          if-no-files-found: error
       - name: Commit last known publications (if branch settings allow)
         # GitHub can disable schedules in inactive public repositories after 60 days.
         # Keep-alive commits are best effort and cannot bypass branch protection.
@@ -53,7 +74,7 @@ jobs:
         run: |
           git config user.name "HATA publications bot"
           git config user.email "hata-updates[bot]@users.noreply.github.com"
-          git add site/index.html site/data/papers.json
+          git add site/index.html site/data/papers.json site/data/source-status.json
           if ! git diff --staged --quiet; then
             git commit -m "Refresh HATA research publications [skip ci]"
             git push origin HEAD:main
@@ -95,3 +116,18 @@ jobs:
       - id: deploy
         name: Publish to GitHub Pages
         uses: actions/deploy-pages@v4
+
+  source-health:
+    # Report source outages independently of successful cached-site deployment.
+    needs: [build, deploy-pages]
+    if: ${{ always() && needs.build.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require successful refresh of every publication source
+        env:
+          SOURCES_DEGRADED: ${{ needs.build.outputs.sources_degraded }}
+        run: |
+          if [ "$SOURCES_DEGRADED" != 'false' ]; then
+            echo '::error::Publication source refresh degraded. Cached site was built, but new records may be missing. Inspect publication-source-health artifact and build summary; request approved Orbit access from DTU Library.'
+            exit 1
+          fi
