@@ -52,6 +52,10 @@ jobs:
           python scripts/update_papers.py
           result=$?
           set -e
+          if ! grep -Fxq 'refresh_completed=true' "$GITHUB_OUTPUT"; then
+            echo '::error::Publication updater did not complete build and diagnostics; refusing deployment.'
+            exit 1
+          fi
           if [ "$result" -eq 2 ]; then
             echo 'degraded=true' >> "$GITHUB_OUTPUT"
             echo '::warning::Publication source refresh failed; publishing retained cache. See source-health job and diagnostic artifact.'

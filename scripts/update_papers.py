@@ -456,7 +456,14 @@ def update(offline: bool = False) -> tuple[int, bool]:
     print(f"Rendered {min(NUMBER_SHOWN, len(papers))} of {len(papers)} cached distinct papers; "
           f"arXiv: {len(incoming_arxiv)} fetched feed entries; Orbit: {len(incoming_orbit)}; "
           f"{'offline' if offline else 'online'}; {'files changed' if changed_json or changed_html else 'no file changes'}.")
-    if not offline and not write_health(sources):
+    healthy = offline or write_health(sources)
+    # Exit 2 alone is ambiguous (Python startup/argument errors also use it).
+    # Signal completion only after rendering and diagnostics both succeeded.
+    output = os.environ.get("GITHUB_OUTPUT")
+    if not offline and output:
+        with open(output, "a", encoding="utf-8") as stream:
+            stream.write("refresh_completed=true\n")
+    if not healthy:
         print("ERROR: Publication refresh degraded; site built from retained cache. "
               "See site/data/source-status.json.", file=sys.stderr)
         raise SystemExit(2)
