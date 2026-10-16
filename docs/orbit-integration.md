@@ -55,3 +55,15 @@ When access is supplied, replace `fetch_orbit` with a schema-validated, paginate
 - [OAI-PMH specification](https://www.openarchives.org/OAI/openarchivesprotocol.html)
 - [ORCID API: reading public records](https://info.orcid.org/documentation/api-tutorials/api-tutorial-read-data-on-a-record/)
 - [Crossref REST API](https://www.crossref.org/documentation/retrieve-metadata/rest-api/)
+
+## Quality assurance — 16 October 2026
+
+Reviewed PR #2 at `beecb4ae989e21483d81fe29e68afe8ba3ed6563`. The [updated PR run](https://github.com/jakoblem/hata/actions/runs/38963252005) passed all 21 tests and the offline build; production build, Pages deployment and source-health jobs were skipped as intended for a PR. Local offline rendering preserved both generated HTML and the full 70-publication JSON cache byte-for-byte.
+
+An additional workflow defect was reproduced and fixed during review: Python startup failures (for example, an unavailable updater script) can also exit 2. Previously the shell accepted that as a completed cached build. The updater now emits `refresh_completed=true` only after rendering and health diagnostics complete; the shell requires this marker before considering exit 2 a safe source fallback. Regression tests execute the production shell with success, degraded refresh, fatal failure and missing completion, including a stale diagnostic file. Injected render errors, diagnostic write failures and unexpected source exceptions never authorize deployment.
+
+The separate source-health shell was also exercised with `SOURCES_DEGRADED=false` (exit 0), `true`, empty and unexpected values (all exit 1). Pages depends only on the successful build, so this later health failure does not block publication. Source-health uses `always()` after build/deploy dependencies, conditioned on a successful build; an unsuccessful build blocks deployment and itself reports failure. A failed Pages deployment remains a deployment failure even when sources are healthy.
+
+At this review stage, main and live production behavior remain unchanged and unverified for this PR; merging awaits production approval. After merge, verify the actual main run: successful cached build and Pages deployment, failed source-health on Orbit denial, uploaded per-profile diagnostics, unchanged valid publication records, and successful best-effort health-history commit. This is a required follow-up, not evidence supplied by the green PR run.
+
+The [16 October 09:54 UTC production run](https://github.com/jakoblem/hata/actions/runs/38883670400) still used the old main code: all three Orbit profiles returned HTTP 403, arXiv returned 65 fetched entries and the site retained 70 distinct publications. The run and Pages deployment both reported success. The access problem therefore remains open. Obtain DTU-approved API/export access using the requirements above; neither this PR nor its completion marker grants Orbit access. No access request was sent.
