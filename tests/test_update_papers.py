@@ -1,4 +1,10 @@
 import unittest
+import copy
+import json
+import tempfile
+import urllib.error
+from pathlib import Path
+from unittest.mock import patch
 from scripts import update_papers as p
 
 MEMBERS = [
@@ -32,6 +38,110 @@ ORBIT = b'''<!doctype html><html><body>
 
 
 class UpdateTests(unittest.TestCase):
+    def test_access_denied_is_not_retried_and_reports_challenge(self):
+        for code in (401, 403):
+            error = urllib.error.HTTPError('https://orbit.dtu.dk/', code, 'Denied',
+                                           {'cf-mitigated': 'challenge'}, None)
+            with patch.object(p.urllib.request, 'urlopen', side_effect=error) as request, \
+                 patch.object(p.time, 'sleep') as sleep:
+                with self.assertRaisesRegex(RuntimeError, f'HTTP {code}.*Cloudflare challenge'):
+                    p.fetch_url('https://orbit.dtu.dk/', attempts=3)
+                self.assertEqual(request.call_count, 1)
+                sleep.assert_not_called()
+
+    def test_transient_http_error_still_retries(self):
+        error = urllib.error.HTTPError('https://orbit.dtu.dk/', 503, 'Unavailable', {}, None)
+        with patch.object(p.urllib.request, 'urlopen', side_effect=error) as request, \
+             patch.object(p.time, 'sleep'):
+            with self.assertRaisesRegex(RuntimeError, 'HTTP 503'):
+                p.fetch_url('https://orbit.dtu.dk/', attempts=2)
+            self.assertEqual(request.call_count, 2)
+
+    def test_partial_profile_failure_and_empty_challenge_are_unhealthy(self):
+        for bad in (RuntimeError('HTTP 403'), b'<html>Just a moment...</html>'):
+            health = []
+            with patch.object(p, 'fetch_url', side_effect=[ORBIT, bad]):
+                papers = p.fetch_orbit(MEMBERS, health)
+            self.assertEqual(len(papers), 2)
+            self.assertEqual([x['status'] for x in health], ['ok', 'error'])
+            self.assertIn('error', health[1])
+
+    def test_degraded_update_preserves_real_cache_and_builds_before_exit(self):
+        original = json.loads(p.DATA.read_text())
+        with tempfile.TemporaryDirectory() as directory:
+            data = Path(directory) / 'papers.json'
+            page = Path(directory) / 'index.html'
+            status = Path(directory) / 'source-status.json'
+            summary = Path(directory) / 'summary.md'
+            data.write_text(json.dumps(original))
+            with patch.multiple(p, DATA=data, PAGE=page, STATUS=status), \
+                 patch.dict(p.os.environ, {'GITHUB_STEP_SUMMARY': str(summary)}), \
+                 patch.object(p, 'fetch_atom', side_effect=RuntimeError('arXiv offline')), \
+                 patch.object(p, 'fetch_url', side_effect=RuntimeError('HTTP 403')):
+                for expected_count in (1, 2):
+                    with self.assertRaises(SystemExit) as result:
+                        p.update()
+                    self.assertEqual(result.exception.code, 2)
+                    self.assertEqual(json.loads(data.read_text())['papers'], original['papers'])
+                    report = json.loads(status.read_text())
+                    self.assertFalse(report['healthy'])
+                    self.assertEqual(report['sources']['orbit']['consecutive_failures'], expected_count)
+                    self.assertEqual(len(report['sources']['orbit']['profiles']), 3)
+                    self.assertIn('<!doctype html>', page.read_text().lower())
+                last_report = status.read_bytes()
+                p.update(offline=True)
+                self.assertEqual(status.read_bytes(), last_report)
+                self.assertIn('consecutive failed refreshes', summary.read_text())
+
+    def test_recovery_resets_failures_and_retains_last_success_on_next_failure(self):
+        with tempfile.TemporaryDirectory() as directory, \
+             patch.object(p, 'STATUS', Path(directory) / 'status.json'), \
+             patch.dict(p.os.environ, {'GITHUB_STEP_SUMMARY': ''}):
+            good = {'orbit': {'status': 'ok', 'entries': 2}}
+            bad = {'orbit': {'status': 'error', 'entries': 0}}
+            self.assertFalse(p.write_health(copy.deepcopy(bad)))
+            self.assertTrue(p.write_health(good))
+            self.assertEqual(good['orbit']['consecutive_failures'], 0)
+            self.assertIsNotNone(good['orbit']['last_success'])
+            self.assertFalse(p.write_health(bad))
+            self.assertEqual(bad['orbit']['last_success'], good['orbit']['last_success'])
+            self.assertEqual(bad['orbit']['consecutive_failures'], 1)
+
+    def test_fresh_arxiv_survives_orbit_failure_and_success_can_recover(self):
+        original = json.loads(p.DATA.read_text())
+        with tempfile.TemporaryDirectory() as directory:
+            data = Path(directory) / 'papers.json'
+            page = Path(directory) / 'index.html'
+            status = Path(directory) / 'source-status.json'
+            data.write_text(json.dumps(original))
+            with patch.multiple(p, DATA=data, PAGE=page, STATUS=status), \
+                 patch.dict(p.os.environ, {'GITHUB_STEP_SUMMARY': ''}), \
+                 patch.object(p, 'fetch_atom', return_value=FEED), \
+                 patch.object(p, 'fetch_url', side_effect=RuntimeError('HTTP 403')):
+                with self.assertRaises(SystemExit):
+                    p.update()
+            updated = json.loads(data.read_text())['papers']
+            self.assertTrue({x['id'] for x in original['papers']} <= {x['id'] for x in updated})
+            self.assertIn('2701.12345', {x['id'] for x in updated})
+            self.assertEqual(json.loads(status.read_text())['sources']['arxiv']['status'], 'ok')
+            with patch.multiple(p, DATA=data, PAGE=page, STATUS=status), \
+                 patch.dict(p.os.environ, {'GITHUB_STEP_SUMMARY': ''}), \
+                 patch.object(p, 'fetch_atom', return_value=FEED), \
+                 patch.object(p, 'fetch_url', return_value=ORBIT):
+                p.update()
+            report = json.loads(status.read_text())
+            self.assertTrue(report['healthy'])
+            self.assertEqual(report['sources']['orbit']['consecutive_failures'], 0)
+            rows = json.loads(data.read_text())['papers']
+            both = [x for x in rows if x.get('arxiv_id') == '2701.12345']
+            self.assertEqual(len(both), 1)
+            self.assertIsNotNone(both[0]['orbit_url'])
+
+    def test_cache_does_not_drop_older_papers_at_100_records(self):
+        rows = [dict(p.parse_atom(FEED, MEMBERS)[0], id=f'2701.{i:05}',
+                     arxiv_id=f'2701.{i:05}', title=f'Paper {i}') for i in range(105)]
+        self.assertEqual(len(p.merge_papers(rows, [])), 105)
+
     def test_query_contains_each_author(self):
         self.assertIn('au:"Jakob Lemvig"', p.create_query(MEMBERS))
 

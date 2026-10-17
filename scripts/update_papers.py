@@ -16,6 +16,7 @@ import datetime as dt
 import html
 from html.parser import HTMLParser
 import json
+import os
 import re
 import sys
 import time
@@ -35,12 +36,12 @@ else:
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "config" / "authors.json"
 DATA = ROOT / "site" / "data" / "papers.json"
+STATUS = ROOT / "site" / "data" / "source-status.json"
 PAGE = ROOT / "site" / "index.html"
 API_URL = "https://export.arxiv.org/api/query"
 ATOM = "{http://www.w3.org/2005/Atom}"
 ARXIV = "{http://arxiv.org/schemas/atom}"
 NUMBER_SHOWN = 5
-MAX_CACHED = 100
 VALID_ID = re.compile(r"(?:\d{4}\.\d{4,5}|[a-z-]+(?:\.[A-Z]{2})?/\d{7})\Z", re.I)
 VALID_ORBIT_SLUG = re.compile(r"[a-z0-9-]{5,180}\Z")
 ORBIT_PUBLICATION_PATH = re.compile(r"^/en/publications/([a-z0-9-]{5,180})/?$", re.I)
@@ -80,6 +81,18 @@ def fetch_url(url: str, attempts: int = 2, max_bytes: int = 3_000_000) -> bytes:
                 if len(data) > max_bytes:
                     raise ValueError("Upstream response exceeds size limit")
                 return data
+        except urllib.error.HTTPError as exc:
+            # Access denials are not transient; never retry or bypass them.
+            if exc.code in (401, 403):
+                challenge = exc.headers.get("cf-mitigated") == "challenge"
+                detail = " (Cloudflare challenge)" if challenge else ""
+                raise RuntimeError(
+                    f"HTTP {exc.code}{detail}: access denied by {urllib.parse.urlsplit(url).hostname}; "
+                    "request an approved DTU integration; no retry attempted"
+                ) from exc
+            if attempt + 1 == attempts:
+                raise RuntimeError(f"HTTP {exc.code} from {urllib.parse.urlsplit(url).hostname}") from exc
+            time.sleep(5 * (attempt + 1))
         except (urllib.error.URLError, TimeoutError, ValueError) as exc:
             if attempt + 1 == attempts:
                 raise RuntimeError(f"Upstream temporarily unavailable: {url}: {exc}") from exc
@@ -213,22 +226,57 @@ def parse_orbit(raw_html: bytes | str, member: dict) -> list[dict]:
     return papers[:12]
 
 
-def fetch_orbit(members: list[dict]) -> list[dict]:
+def fetch_orbit(members: list[dict], health: list[dict] | None = None) -> list[dict]:
     found: list[dict] = []
+    health = health if health is not None else []
     for member in members:
+        state = {"member": member["name"], "status": "error", "entries": 0}
+        health.append(state)
         slug = member.get("orbit_slug")
         if not slug or not VALID_ORBIT_SLUG.fullmatch(slug):
+            state["error"] = "Missing or invalid Orbit person slug"
             print(f"WARNING: No Orbit person slug for {member['name']}; skipping.", file=sys.stderr)
             continue
         url = ORBIT_PROFILE.format(slug=slug)
         try:
             rows = parse_orbit(fetch_url(url, attempts=2), member)
             if not rows:
-                print(f"WARNING: No readable Orbit entries for {member['name']} ({url}). Portal HTML may have changed.", file=sys.stderr)
+                raise ValueError("No readable Orbit entries: empty profile, challenge page or changed HTML")
+            state.update(status="ok", entries=len(rows))
             found.extend(rows)
         except (RuntimeError, ValueError) as exc:
+            state["error"] = str(exc)
             print(f"WARNING: {exc}; retaining last-known Orbit entries.", file=sys.stderr)
     return found
+
+
+def write_health(sources: dict) -> bool:
+    """Persist independent source health, including consecutive failed refreshes."""
+    previous = json.loads(STATUS.read_text(encoding="utf-8")) if STATUS.exists() else {}
+    now = dt.datetime.now(dt.timezone.utc).isoformat()
+    for name, state in sources.items():
+        old = previous.get("sources", {}).get(name, {})
+        ok = state["status"] == "ok"
+        state["consecutive_failures"] = 0 if ok else old.get("consecutive_failures", 0) + 1
+        state["last_success"] = now if ok else old.get("last_success")
+    healthy = all(s["status"] == "ok" for s in sources.values())
+    write_if_changed(STATUS, json.dumps({"checked_at": now, "healthy": healthy, "sources": sources},
+                                      ensure_ascii=False, indent=2) + "\n")
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a", encoding="utf-8") as stream:
+            stream.write("## Publication source health\n\n")
+            for name, state in sources.items():
+                stream.write(f"- {name}: {state['status']}; {state['entries']} fetched entries; "
+                             f"{state['consecutive_failures']} consecutive failed refreshes; "
+                             f"last success: {state['last_success'] or 'not recorded'}.\n")
+                if state.get("error"):
+                    stream.write(f"  - {state['error']}\n")
+                for profile in state.get("profiles", []):
+                    stream.write(f"  - {profile['member']}: {profile['status']}; "
+                                 f"{profile.get('error', str(profile['entries']) + ' entries')}\n")
+            stream.write("\nCached publications are retained. See source-status.json for per-profile diagnostics.\n")
+    return healthy
 
 
 def valid_cache_row(item: dict) -> bool:
@@ -324,7 +372,7 @@ def merge_papers(existing: list[dict], fresh: list[dict]) -> list[dict]:
                 j += 1
         i += 1
     merged.sort(key=lambda x: (x["published"], x["id"]), reverse=True)
-    return merged[:MAX_CACHED]
+    return merged
 
 
 def render_news(papers: list[dict]) -> str:
@@ -379,14 +427,22 @@ def update(offline: bool = False) -> tuple[int, bool]:
     old = [p for p in cache.get("papers", []) if set(p.get("matched_members", [])) & current_names]
     incoming_arxiv: list[dict] = []
     incoming_orbit: list[dict] = []
+    sources = {}
     if not offline:
+        sources["arxiv"] = {"status": "error", "entries": 0}
         try:
             incoming_arxiv = parse_atom(fetch_atom(members), members)
             if not incoming_arxiv:
-                print("WARNING: arXiv returned no matching papers; preserving cache.", file=sys.stderr)
+                raise ValueError("arXiv returned no matching papers; preserving cache")
+            sources["arxiv"].update(status="ok", entries=len(incoming_arxiv))
         except (RuntimeError, ValueError, ET.ParseError) as exc:
+            sources["arxiv"]["error"] = str(exc)
             print(f"WARNING: {exc}; preserving cached arXiv data.", file=sys.stderr)
-        incoming_orbit = fetch_orbit(members)
+        profiles = []
+        incoming_orbit = fetch_orbit(members, profiles)
+        sources["orbit"] = {"status": "ok" if profiles and all(
+            profile["status"] == "ok" for profile in profiles) else "error",
+            "entries": len(incoming_orbit), "profiles": profiles}
     papers = merge_papers(old, incoming_orbit + incoming_arxiv)
     if not papers:
         raise RuntimeError("No publications or valid cache; refusing to build an empty feed.")
@@ -398,8 +454,19 @@ def update(offline: bool = False) -> tuple[int, bool]:
     changed_json = write_if_changed(DATA, json.dumps(cache, ensure_ascii=False, indent=2) + "\n")
     changed_html = write_if_changed(PAGE, content_build.build_html(papers, render_news, same_paper))
     print(f"Rendered {min(NUMBER_SHOWN, len(papers))} of {len(papers)} cached distinct papers; "
-          f"arXiv: {len(incoming_arxiv)} new feed entries; Orbit: {len(incoming_orbit)}; "
+          f"arXiv: {len(incoming_arxiv)} fetched feed entries; Orbit: {len(incoming_orbit)}; "
           f"{'offline' if offline else 'online'}; {'files changed' if changed_json or changed_html else 'no file changes'}.")
+    healthy = offline or write_health(sources)
+    # Exit 2 alone is ambiguous (Python startup/argument errors also use it).
+    # Signal completion only after rendering and diagnostics both succeeded.
+    output = os.environ.get("GITHUB_OUTPUT")
+    if not offline and output:
+        with open(output, "a", encoding="utf-8") as stream:
+            stream.write("refresh_completed=true\n")
+    if not healthy:
+        print("ERROR: Publication refresh degraded; site built from retained cache. "
+              "See site/data/source-status.json.", file=sys.stderr)
+        raise SystemExit(2)
     return len(papers), changed_json or changed_html
 
 
