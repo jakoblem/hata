@@ -64,6 +64,24 @@ An additional workflow defect was reproduced and fixed during review: Python sta
 
 The separate source-health shell was also exercised with `SOURCES_DEGRADED=false` (exit 0), `true`, empty and unexpected values (all exit 1). Pages depends only on the successful build, so this later health failure does not block publication. Source-health uses `always()` after build/deploy dependencies, conditioned on a successful build; an unsuccessful build blocks deployment and itself reports failure. A failed Pages deployment remains a deployment failure even when sources are healthy.
 
-At this review stage, main and live production behavior remain unchanged and unverified for this PR; merging awaits production approval. After merge, verify the actual main run: successful cached build and Pages deployment, failed source-health on Orbit denial, uploaded per-profile diagnostics, unchanged valid publication records, and successful best-effort health-history commit. This is a required follow-up, not evidence supplied by the green PR run.
+Production verification was pending at the 16 October review. The user explicitly approved merging and production verification on 17 October; the results below supersede that pending status.
 
 The [16 October 09:54 UTC production run](https://github.com/jakoblem/hata/actions/runs/38883670400) still used the old main code: all three Orbit profiles returned HTTP 403, arXiv returned 65 fetched entries and the site retained 70 distinct publications. The run and Pages deployment both reported success. The access problem therefore remains open. Obtain DTU-approved API/export access using the requirements above; neither this PR nor its completion marker grants Orbit access. No access request was sent.
+
+## Verified production behavior — 17 October 2026
+
+PR #2 was merged with explicit user approval as `4912c74a25ef8c400fe12439f4e40221bc7f738c`. The [actual main push run](https://github.com/jakoblem/hata/actions/runs/39033388273) started at 12:39:26 UTC and completed at 12:40:05 UTC (14:39–14:40 Europe/Copenhagen).
+
+| Check | Observed result |
+| --- | --- |
+| Unit tests on main | All 21 passed. |
+| Publication refresh and static build | Successful cached build; arXiv returned 65 fetched entries, Orbit returned zero. The updater completed rendering and diagnostics, then returned degraded status; the workflow accepted only this completed fallback. |
+| Orbit access | All three profiles returned HTTP 403 with `cf-mitigated: challenge`, reported as Cloudflare challenge. No 401/403 retry was attempted. |
+| Cache preservation | All 70 publications retained. `papers.json` is byte-for-byte unchanged: Git blob `29083584205c3d629e4daaa3add2a13cdba848bf` before and after the run. |
+| Diagnostics | `publication-source-health` artifact uploaded successfully ([artifact 12101610299](https://github.com/jakoblem/hata/actions/runs/39033388273/artifacts/12101610299)); per-profile errors also committed in `site/data/source-status.json`. |
+| Persistent history | Bot commit `b29c750c3d24b8583deecc0ef5ba2b991ec6eecf` successfully added health status to main. `checked_at` is `2026-10-17T12:39:40.855439+00:00`; Orbit has `consecutive_failures=1` and `last_success=null`, with no fabricated earlier successes. |
+| GitHub Pages | `deploy-pages` succeeded at 12:39:59 UTC for the merged commit and artifact 12101500415. |
+| Separate source check | `source-health` received `SOURCES_DEGRADED=true`, emitted the explicit source-refresh error, and exited 1 after successful Pages deployment. The overall run correctly concludes `failure`. |
+| Live HTTP checks | The homepage, `/data/source-status.json` and `/data/papers.json` at `https://jakoblem.github.io/hata/` all returned HTTP 200. The live diagnostic timestamp matches this run and reports `healthy=false`; the live publication JSON contains 70 papers. |
+
+The source failure is now visible without interrupting cached publication availability. Orbit discovery itself is still unavailable; approved DTU Pure API/export or other approved integration is still required. No request has been sent to DTU Library and no credentials or challenge bypass have been introduced. Fatal startup/render/diagnostic error paths were verified by the regression tests; deliberate failures were not injected into live production. The optional DTU SSH deployment remained disabled/skipped in this run; this verification covers GitHub Pages.
