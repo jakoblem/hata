@@ -4,15 +4,15 @@
 # Text is plain text; enclose words in *asterisks* for italics.
 # The url, link_text, link_aria_label and year_tag fields are optional.
 
-[[news]]
-date = "2026-10"
-year_tag = "VISIT"
-category = "RESEARCH VISIT · OTH REGENSBURG"
-title = "Ole Christensen and Marzieh Hasannasab to visit Jürgen Frikel"
-description = "During the week of 12 October 2026, Ole Christensen and Marzieh Hasannasab will make a two-day visit to Prof. Jürgen Frikel of OTH Regensburg."
-url = "https://www.oth-regensburg.de/personen/detailansicht/juergen-frikel"
-link_text = "Jürgen Frikel · OTH Regensburg"
-link_aria_label = "Host information"
+# [[news]]
+# date = "2026-10-12"
+# year_tag = "VISIT"
+# category = "RESEARCH VISIT · OTH REGENSBURG"
+# title = "Ole Christensen and Marzieh Hasannasab to visit Jürgen Frikel"
+# description = "During the week of 12 October 2026, Ole Christensen and Marzieh Hasannasab will make a two-day visit to Prof. Jürgen Frikel of OTH Regensburg."
+# url = "https://www.oth-regensburg.de/personen/detailansicht/juergen-frikel"
+# link_text = "Jürgen Frikel · OTH Regensburg"
+# link_aria_label = "Host information"
 
 [[news]]
 date = "2026-09-03"
