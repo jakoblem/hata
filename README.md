@@ -10,15 +10,29 @@ The published site consists of plain HTML/CSS/images in [`site/`](site/), genera
 
 ## How to update the homepage
 
-**For routine updates, edit only two human-readable files in the repository:**
+**For routine content updates, use the source files below rather than editing the generated page:**
 
-| What you want to add | Where to edit |
+| What you want to change | Where to edit |
 | --- | --- |
-| Research visit, talk, conference, defence, award, other announcement | [\`content/news.toml\`](content/news.toml) |
-| Submitted/accepted manuscript, or paper absent from arXiv and DTU Orbit | [\`content/papers.toml\`](content/papers.toml) |
-| Staff member or arXiv/Orbit author alias | [\`config/authors.json\`](config/authors.json) (infrequent) |
+| Main page wording, headings, research cards, links, people section, or HTML layout | [`templates/index.html`](templates/index.html) |
+| Research visit, talk, conference, defence, award, other announcement | [`content/news.toml`](content/news.toml) |
+| Submitted/accepted manuscript, or paper absent from arXiv and DTU Orbit | [`content/papers.toml`](content/papers.toml) |
+| Colours, spacing, typography, card layout, responsive styling | [`site/assets/styles.css`](site/assets/styles.css) |
+| Staff member or arXiv/Orbit author alias | [`config/authors.json`](config/authors.json) (infrequent) |
 
-**Do not edit \`site/index.html\` directly.** It is the build output. The page layout and surrounding HTML live in [\`templates/index.html\`](templates/index.html). Automatic publication updates use the existing [\`scripts/update_papers.py\`](scripts/update_papers.py), and the TOML renderer is [\`scripts/content_build.py\`](scripts/content_build.py).
+### Changing the main HTML page
+
+For ordinary HTML/content changes, edit **[`templates/index.html`](templates/index.html)**. This is the source for the homepage. Use it for changes such as the hero text, research-area descriptions, researcher interests, publication-directory links, section headings, or page structure.
+
+**Do not edit `site/index.html` directly.** It is generated from `templates/index.html` together with the TOML content and publication data, so the next GitHub Actions build can overwrite direct edits.
+
+After editing `templates/index.html`, commit the change to `main`. GitHub Actions rebuilds `site/index.html` automatically. To rebuild locally, run:
+
+```sh
+python3 scripts/update_papers.py --offline
+```
+
+Automatic publication updates use [`scripts/update_papers.py`](scripts/update_papers.py), and the TOML renderer is [`scripts/content_build.py`](scripts/content_build.py).
 
 ### Easiest way: edit on GitHub
 
