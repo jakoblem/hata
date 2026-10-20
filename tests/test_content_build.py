@@ -9,15 +9,36 @@ from scripts import content_build as c
 
 
 class ManualContentTests(unittest.TestCase):
-    def test_current_news_migrates_without_losing_content(self):
-        news = c.read_news()
+    def test_news_file_parses_and_renders_without_assuming_editorial_entries(self):
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'news.toml'
+            path.write_text(
+                '[[news]]\n'
+                'date = "2026-10"\n'
+                'year_tag = "VISIT"\n'
+                'category = "RESEARCH VISIT"\n'
+                'title = "Example visit"\n'
+                'description = "Discussion of *frame theory*."\n'
+                'url = "https://example.org/visit"\n'
+                'link_text = "Host information"\n'
+                '\n'
+                '[[news]]\n'
+                'date = "2026-09-03"\n'
+                'category = "PHD DEFENCE"\n'
+                'title = "Example defence"\n'
+                'description = "Committee service."\n',
+                encoding='utf-8',
+            )
+            with patch.object(c, 'NEWS_FILE', path):
+                news = c.read_news()
         self.assertEqual(len(news), 2)
         markup = c.render_group_news(news)
         self.assertIn('datetime="2026-10" class="orbit-year"', markup)
-        self.assertIn('Ole Christensen and Marzieh Hasannasab to visit Jürgen Frikel', markup)
-        self.assertIn('Jürgen Frikel · OTH Regensburg', markup)
+        self.assertIn('Example visit', markup)
+        self.assertIn('<em>frame theory</em>', markup)
+        self.assertIn('Host information', markup)
         self.assertIn('datetime="2026-09-03"', markup)
-        self.assertIn('<em>Quantum harmonic and time-frequency methods for concentration problems in phase space</em>', markup)
+        self.assertIn('Example defence', markup)
         self.assertNotIn('HATA_NEWS', markup)
 
     def test_manual_papers_disabled_initially(self):
@@ -66,7 +87,7 @@ class ManualContentTests(unittest.TestCase):
             with patch.object(c, 'TEMPLATE', path):
                 generated = c.build_html([], lambda _: 'AUTO', lambda a, b: False)
                 self.assertIn('before AUTO middle ', generated)
-                self.assertIn('Ole Christensen and Marzieh Hasannasab', generated)
+                self.assertIn('Marzieh Hasannasab served on the PhD defence committee at NTNU', generated)
                 self.assertTrue(generated.endswith(' after'))
                 path.write_text('{{HATA_PAPERS}} only', encoding='utf-8')
                 with self.assertRaisesRegex(ValueError, 'exactly one'):
