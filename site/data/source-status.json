@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-10-25T09:53:25.452070+00:00",
+  "checked_at": "2026-10-26T11:12:35.682006+00:00",
   "healthy": false,
   "sources": {
     "arxiv": {
       "status": "ok",
       "entries": 65,
       "consecutive_failures": 0,
-      "last_success": "2026-10-25T09:53:25.452070+00:00"
+      "last_success": "2026-10-26T11:12:35.682006+00:00"
     },
     "orbit": {
       "status": "error",
@@ -31,7 +31,7 @@
           "error": "HTTP 403 (Cloudflare challenge): access denied by orbit.dtu.dk; request an approved DTU integration; no retry attempted"
         }
       ],
-      "consecutive_failures": 13,
+      "consecutive_failures": 14,
       "last_success": null
     }
   }
