@@ -3,6 +3,23 @@
   "notes": "Snapshot of first arXiv submission dates and Orbit publication years. Orbit collection is best-effort HTML parsing (not a stable official feed); no entries are removed on source failure.",
   "papers": [
     {
+      "id": "2611.05337",
+      "title": "On the Gabor frame set of polynomial-Gaussian windows",
+      "authors": [
+        "Jakob Lemvig"
+      ],
+      "published": "2026-11-03",
+      "date_precision": "day",
+      "primary_category": "math.FA",
+      "arxiv_id": "2611.05337",
+      "url": "https://arxiv.org/abs/2611.05337",
+      "orbit_url": null,
+      "orbit_year": null,
+      "matched_members": [
+        "Jakob Lemvig"
+      ]
+    },
+    {
       "id": "2609.13116",
       "title": "The zero set of the Zak transform of B-splines with applications to Gabor frames",
       "authors": [
